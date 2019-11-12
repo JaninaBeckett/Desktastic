@@ -25,6 +25,11 @@ html {
   grid-area: places;
   height: auto;
   display: flex;
+  flex-flow: column nowrap;
+}
+
+.seatContainer {
+  display: flex;
   flex-flow: row wrap;
 }
 
