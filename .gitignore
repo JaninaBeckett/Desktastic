@@ -1,1 +1,3 @@
 launchConfigurations/
+node_modules
+package-lock.json

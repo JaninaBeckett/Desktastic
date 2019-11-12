@@ -11,15 +11,23 @@ var express = require('express');
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
+const bodyParser = require('body-parser');
+
 
 // create a new express server
 var app = express();
 
+
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser());
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
+
+app.get('/', (req, res) => {
+  res.send("Hello to this website")
+})
 
 app.post('/updateSeat', (req,res)=> {
   console.log(req.body);
