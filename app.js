@@ -18,6 +18,7 @@ const seat = require('./seat.json');
 const app = express();
 const floor = 1; // array starts with 0 therefore 1 means floor 2
 const seats = 4;
+let raw = [];
 
 
 // serve the files out of ./public as our main files
@@ -26,10 +27,6 @@ app.use(bodyParser());
 
 // get the app environment from Cloud Foundry
 const appEnv = cfenv.getAppEnv();
-
-app.get('/', (req, res) => {
-  res.send('Hello to this website');
-});
 
 app.post('/updateSeat', (req, res) => {
   console.log(req.body.id);
@@ -49,18 +46,38 @@ app.post('/updateSeat', (req, res) => {
   }
 });
 
+app.post('/raw', (req, res) => {
+  raw.push(req.body);
+  res.send(200);
+});
 
-app.get('/seats', (req, res) => {
-  let availableSeats = [];
+app.get('/raw', (req, res) => {
+  res.send(raw[raw.length - 1]);
+});
+
+app.get('/allSeats', (req, res)=> {
+  let availableSeats = [[],[]];
   for (let i = 0; i < floor + 1; i++) {
     seat.seats[i].forEach((element) => {
-      if (element.reserved == false) {
-        availableSeats.push(element);
+        availableSeats[i].push(element);
+    });
+  }
+  res.send(availableSeats)
+});
+
+
+app.get('/availableSeats', (req, res) => {
+  let availableSeats = [[],[]];
+  for (let i = 0; i < floor + 1; i++) {
+    seat.seats[i].forEach((element) => {
+      if (element.reserved === false) {
+        element.floor = i+1;
+        availableSeats[i].push(element);
       }
     });
   }
 
-  if (availableSeats == {}) {
+  if (availableSeats == [[],[]]) {
     res.send('No available seats');
   } else {
     res.send(availableSeats);
