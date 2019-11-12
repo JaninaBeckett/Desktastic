@@ -1,0 +1,56 @@
+*,
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 25% auto;
+
+  grid-template-areas: "sidebar places";
+  height: 100vh;
+}
+
+.sidebar {
+  display: flex;
+  grid-area: sidebar;
+  flex-flow: column nowrap;
+  background-color: LightGray;
+  height: auto;
+}
+
+.main {
+  grid-area: places;
+  height: auto;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.sidebarButton {
+  display: inline-block;
+  color: #444;
+  border: 1px solid #ccc;
+  background: #ddd;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  vertical-align: middle;
+  max-width: 100px;
+  padding: 5px;
+  text-align: center;
+}
+
+.sidebarButton:active {
+  color: red;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+}
+
+.seatName {
+  text-align: center;
+  padding: 5px;
+}
+
+.seat {
+  padding: 0px 20px 0px 20px;
+}

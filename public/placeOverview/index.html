@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello placeoverview</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/placeOverview/stylesheets/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <script type="application/javascript">
+      const data = [
+        [
+          { id: 1, reserved: true },
+          { id: 2, reserved: false },
+          { id: 3, reserved: true },
+          { id: 4, reserved: false }
+        ],
+        [
+          { id: 1, reserved: false },
+          { id: 2, reserved: false },
+          { id: 3, reserved: true },
+          { id: 4, reserved: true }
+        ],
+        [
+          { id: 1, reserved: false },
+          { id: 2, reserved: false },
+          { id: 3, reserved: true },
+          { id: 4, reserved: true },
+          { id: 5, reserved: false },
+          { id: 6, reserved: true },
+          { id: 7, reserved: true },
+          { id: 8, reserved: false },
+          { id: 9, reserved: true },
+          { id: 10, reserved: true },
+          { id: 11, reserved: true },
+          { id: 12, reserved: false },
+          { id: 13, reserved: true },
+          { id: 14, reserved: true },
+          { id: 15, reserved: true },
+          { id: 16, reserved: false },
+          { id: 17, reserved: true },
+          { id: 18, reserved: true }
+        ]
+      ];
+
+      function buildFloor(floor) {
+        workplaces = "";
+        data[floor].forEach(function(elem, index) {
+          seatKey = data[floor][index].id;
+          inUse = data[floor][index].reserved;
+          workplaces += `<div class="seat"><div class="seatSign"><svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" fill="${inUse ? "green" : "red"}" />
+            </svg></div><div class="seatName">Sitz Nr. ${seatKey}</div></div>`;
+        });
+        return workplaces;
+      }
+
+      function sidebarButtonHandler(floor) {
+        // Lets change the conten of the main container
+
+        $("#main").html(buildFloor(floor));
+      }
+
+      window.onload = function() {
+        let sidebarButtons = "";
+        let mainPlaces;
+        data.forEach(function(elem, index) {
+          console.log("In for each " + index);
+
+          sidebarButtons += `<div class="sidebarButton" onClick="sidebarButtonHandler(${index})">Floor ${index}</div>`;
+        });
+        console.log(sidebarButtons);
+        $("#sidebar").html(sidebarButtons);
+        $("#main").html(buildFloor(0));
+      };
+    </script>
+    <div class="container">
+      <div id="sidebar" class="sidebar">
+        <!-- Sidebar with buttons for the different floors -->
+      </div>
+      <div id="main" class="main">
+        <!-- Container for the actual places in it -->
+      </div>
+    </div>
+
+    <!-- <table>
+      <tr>
+        <td style="width:30%;"></td>
+        <td>
+          <h1>Hello placeoverview!</h1>
+        </td>
+      </tr>
+    </table> -->
+  </body>
+</html>

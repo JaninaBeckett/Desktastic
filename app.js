@@ -6,8 +6,8 @@
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
-const express = require('express');
 
+const express = require('express');
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 const cfenv = require('cfenv');
@@ -20,10 +20,12 @@ const floor = 1; // array starts with 0 therefore 1 means floor 2
 const seats = 4;
 let raw = [];
 
-
 // serve the files out of ./public as our main files
-app.use(express.static(`${__dirname}/public`));
-app.use(bodyParser());
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded());
+
+app.use(bodyParser.json());
+
 
 // get the app environment from Cloud Foundry
 const appEnv = cfenv.getAppEnv();
