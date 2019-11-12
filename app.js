@@ -40,12 +40,8 @@ app.post('/updateSeat', (req, res) => {
     res.send('not so many seats available');
   }
   const index = seat.seats[newFloor].findIndex(item => item.id === req.body.id);
-  if (seat.seats[newFloor][index].reserved === true) {
-    res.send('this seat is already reserved');
-  } else {
     seat.seats[newFloor].splice(index, 1, req.body);
     res.send('Updated selected seat');
-  }
 });
 
 app.get('/oneSeat', (req, res) => {
