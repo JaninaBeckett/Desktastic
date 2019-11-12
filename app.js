@@ -49,15 +49,15 @@ app.post('/updateSeat', (req, res) => {
 });
 
 app.post('/raw', (req, res) => {
-  raw.push(req.body);
+  raw[0] = req.body;
   res.send(200);
 });
 
 app.get('/raw', (req, res) => {
-  res.send(raw[raw.length - 1]);
+  res.send(raw[0]);
 });
 
-app.get('/allSeats', (req, res)=> {
+app.get('/allSeats', (req, res) => {
   let availableSeats = [[],[]];
   for (let i = 0; i < floor + 1; i++) {
     seat.seats[i].forEach((element) => {
