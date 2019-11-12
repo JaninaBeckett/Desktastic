@@ -40,7 +40,7 @@ app.post('/updateSeat', (req, res) => {
     res.send('not so many seats available');
   }
   const index = seat.seats[newFloor].findIndex(item => item.id === req.body.id);
-  if (seat.seats[newFloor][index].reserved == true) {
+  if (seat.seats[newFloor][index].reserved === true) {
     res.send('this seat is already reserved');
   } else {
     seat.seats[newFloor].splice(index, 1, req.body);
@@ -48,9 +48,23 @@ app.post('/updateSeat', (req, res) => {
   }
 });
 
+app.get('/oneSeat', (req, res) => {
+  for (let i = 0; i < floor + 1; i++) {
+    seat.seats[i].forEach((element) => {
+      if (element.reserved === false) {
+        element.floor = i+1;
+        res.send(element);
+      }
+      else{
+        res.send("no seat available")
+      }
+    });
+  }
+});
+
 app.post('/raw', (req, res) => {
   raw[0] = req.body;
-  res.send(200);
+  res.sendStatus(200);
 });
 
 app.get('/raw', (req, res) => {
