@@ -10,7 +10,10 @@
 
   <body>
     <script type="application/javascript">
-      const data = [
+      var data = [];
+      var selectedFloor = 0;
+
+      var tmpData = [
         [
           { id: 1, reserved: true },
           { id: 2, reserved: false },
@@ -45,35 +48,57 @@
         ]
       ];
 
-      function buildFloor(floor) {
-        workplaces = "";
-        data[floor].forEach(function(elem, index) {
-          seatKey = data[floor][index].id;
-          inUse = data[floor][index].reserved;
-          workplaces += `<div class="seat"><div class="seatSign"><svg height="100" width="100">
+      function buildFloor() {
+        workplaces = `<h1>Wir befinden uns im ${selectedFloor}</h1><div class="seatContainer">`;
+
+        data[selectedFloor] &&
+          data[selectedFloor].forEach(function(elem, index) {
+            seatKey = data[selectedFloor][index].id;
+            inUse = data[selectedFloor][index].reserved;
+            workplaces += `<div class="seat"><div class="seatSign"><svg height="100" width="100">
             <circle cx="50" cy="50" r="40" fill="${inUse ? "green" : "red"}" />
             </svg></div><div class="seatName">Sitz Nr. ${seatKey}</div></div>`;
+          });
+        workplaces += "</div>";
+        $("#main").html(workplaces);
+      }
+
+      function buildSidebar() {
+        let sidebarButtons = "";
+        data.forEach(function(elem, index) {
+          sidebarButtons += `<div class="sidebarButton" onClick="sidebarButtonHandler(${index})">Floor ${index}. Geschoss</div>`;
         });
-        return workplaces;
+
+        $("#sidebar").html(sidebarButtons);
       }
 
       function sidebarButtonHandler(floor) {
         // Lets change the conten of the main container
-
-        $("#main").html(buildFloor(floor));
+        selectedFloor = floor;
+        $("#main").html(buildFloor());
       }
 
       window.onload = function() {
-        let sidebarButtons = "";
-        let mainPlaces;
-        data.forEach(function(elem, index) {
-          console.log("In for each " + index);
+        setInterval(function() {
+          $.ajax({
+            url: "/allSeats",
+            type: "GET",
+            crossDomain: true,
+            headers: {
+              "Access-Control-Allow-Origin": "*"
+            },
+            success: function(result) {
+              if (JSON.stringify(result) != JSON.stringify(data)) {
+                data = result;
+                buildFloor();
+                buildSidebar();
+              }
+            }
+          });
+        }, 1000);
 
-          sidebarButtons += `<div class="sidebarButton" onClick="sidebarButtonHandler(${index})">Floor ${index}</div>`;
-        });
-        console.log(sidebarButtons);
-        $("#sidebar").html(sidebarButtons);
-        $("#main").html(buildFloor(0));
+        buildSidebar();
+        buildFloor();
       };
     </script>
     <div class="container">
