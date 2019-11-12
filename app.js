@@ -23,6 +23,7 @@ var appEnv = cfenv.getAppEnv();
 
 app.post('/updateSeat', (req,res)=> {
   console.log(req.body);
+  res.send("thanks for using the service");
 })
 
 // start server on the specified port and binding host
