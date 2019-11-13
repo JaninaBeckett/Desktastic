@@ -32,10 +32,8 @@
                   count
                 ] = `<div>Data Sensor01: Acceleration <span>${result.accelerationZ}</span> ; Humiditiy <span>${result.humidity}</span> ; Temperature <span>${result.temperature}</span></div>`;
                 count == 2 ? (count = 0) : count++;
-                text = "";
-                for (var e = 0; e < elems.length(); e++) {
-                  text += elems[e];
-                }
+
+                text = elems[0] + elems[1] + elems[2];
                 $("#container").html(text);
               } else {
                 $("#container").html("<div>Sensor not available</div>");
