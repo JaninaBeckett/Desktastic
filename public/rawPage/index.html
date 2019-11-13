@@ -27,7 +27,7 @@
             },
             success: function(result) {
               if (result != []) {
-                if (elems.length() < 3) {
+                if (elems.length < 3) {
                   elems.push(
                     `<div>Data Sensor01 ${Date.now()}: Acceleration <span>${
                       result.accelerationZ

@@ -14,7 +14,10 @@
       var selectedFloor = 0;
 
       function buildFloor() {
-        workplaces = `<h3>Your are on the ${selectedFloor}. floor</h3><div class="seatContainer">`;
+        workplaces =
+          data == []
+            ? "Loading..."
+            : `<h3>Your are on the ${selectedFloor}. floor</h3><div class="seatContainer">`;
 
         data[selectedFloor] &&
           data[selectedFloor].forEach(function(elem, index) {
