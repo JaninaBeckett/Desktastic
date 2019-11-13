@@ -16,7 +16,6 @@
   <body style="background-color: black;">
     <script>
       window.onload = function() {
-        var count = 0;
         var elems = [];
         setInterval(function() {
           $.ajax({
@@ -49,7 +48,8 @@
                     result.temperature
                   }</span></div>`;
                 }
-
+                console.log(elems);
+                console.log(text);
                 text = elems[0] + elems[1] + elems[2];
                 $("#container").html(text);
               } else {

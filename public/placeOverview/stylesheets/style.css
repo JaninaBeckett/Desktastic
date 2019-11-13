@@ -19,6 +19,9 @@ html {
   flex-flow: column nowrap;
   background-color: LightGray;
   height: auto;
+  padding: 20px;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .main {
@@ -26,6 +29,7 @@ html {
   height: auto;
   display: flex;
   flex-flow: column nowrap;
+  padding: 20px;
 }
 
 .seatContainer {
@@ -58,4 +62,5 @@ html {
 
 .seat {
   padding: 0px 20px 0px 20px;
+  max-height: 150px;
 }
