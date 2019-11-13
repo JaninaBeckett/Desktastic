@@ -27,26 +27,18 @@
             },
             success: function(result) {
               if (result != []) {
+                var d = new Date();
+                date = new Date(
+                  timestamp * 1000 + d.getTimezoneOffset() * 60000
+                );
                 if (elems.length < 3) {
                   elems.push(
-                    `<div>Data Sensor01 ${Date.now()}: Acceleration <span>${
-                      result.accelerationZ
-                    }</span> ; Humiditiy <span>${
-                      result.humidity
-                    }</span> ; Temperature <span>${
-                      result.temperature
-                    }</span></div>`
+                    `<div>Data Sensor01 ${date}: Acceleration <span>${result.accelerationZ}</span> ; Humiditiy <span>${result.humidity}</span> ; Temperature <span>${result.temperature}</span></div>`
                   );
                 } else {
                   elems[0] = elems[1];
                   elems[1] = elems[2];
-                  elems[2] = `<div>Data Sensor01 ${Date.now()}: Acceleration <span>${
-                    result.accelerationZ
-                  }</span> ; Humiditiy <span>${
-                    result.humidity
-                  }</span> ; Temperature <span>${
-                    result.temperature
-                  }</span></div>`;
+                  elems[2] = `<div>Data Sensor01 ${date}: Acceleration <span>${result.accelerationZ}</span> ; Humiditiy <span>${result.humidity}</span> ; Temperature <span>${result.temperature}</span></div>`;
                 }
                 console.log(elems);
                 text = elems[0] + elems[1] + elems[2];
