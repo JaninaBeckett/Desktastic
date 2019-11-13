@@ -16,6 +16,8 @@
   <body style="background-color: black;">
     <script>
       window.onload = function() {
+        var count = 0;
+        var elems = [];
         setInterval(function() {
           $.ajax({
             url: "/raw",
@@ -25,12 +27,18 @@
               "Access-Control-Allow-Origin": "*"
             },
             success: function(result) {
-              console.log(result);
               if (result != []) {
-                tmp = `<div>Data Sensor01: Acceleration <span>${result.accelerationZ}</span> ; Humiditiy <span>${result.humidity}</span> ; Temperature <span>${result.temperature}</span></div>`;
-                $("#container").append(tmp);
+                elems[
+                  count
+                ] = `<div>Data Sensor01: Acceleration <span>${result.accelerationZ}</span> ; Humiditiy <span>${result.humidity}</span> ; Temperature <span>${result.temperature}</span></div>`;
+                count == 2 ? (count = 0) : count++;
+                text = "";
+                for (var e = 0; e < elems.length(); e++) {
+                  text += elems[e];
+                }
+                $("#container").html(text);
               } else {
-                $("#container").append("<div>Sensor nicht drin</div>");
+                $("#container").html("<div>Sensor not available</div>");
               }
             }
           });
